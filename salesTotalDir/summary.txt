@@ -1,0 +1,13 @@
+Sales Summary
+------------
+Total Sales: 2012.20
+Details:
+C:\Users\32tpa\Desktop\School\cse325\FileSystem\mslearn-dotnet-files\stores\sales.json
+C:\Users\32tpa\Desktop\School\cse325\FileSystem\mslearn-dotnet-files\stores\201\sales.json
+C:\Users\32tpa\Desktop\School\cse325\FileSystem\mslearn-dotnet-files\stores\201\salestotals.json
+C:\Users\32tpa\Desktop\School\cse325\FileSystem\mslearn-dotnet-files\stores\202\sales.json
+C:\Users\32tpa\Desktop\School\cse325\FileSystem\mslearn-dotnet-files\stores\202\salestotals.json
+C:\Users\32tpa\Desktop\School\cse325\FileSystem\mslearn-dotnet-files\stores\203\sales.json
+C:\Users\32tpa\Desktop\School\cse325\FileSystem\mslearn-dotnet-files\stores\203\salestotals.json
+C:\Users\32tpa\Desktop\School\cse325\FileSystem\mslearn-dotnet-files\stores\204\sales.json
+C:\Users\32tpa\Desktop\School\cse325\FileSystem\mslearn-dotnet-files\stores\204\salestotals.json
