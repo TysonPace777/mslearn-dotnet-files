@@ -1,0 +1,53 @@
+1. Evidence (JSON of added pizza)
+
+HTTP/1.1 200 OK
+Connection: close
+Content-Type: application/json; charset=utf-8
+Date: Thu, 07 May 2026 21:21:22 GMT
+Server: Kestrel
+Transfer-Encoding: chunked
+
+[
+  {
+    "id": 1,
+    "name": "Classic Italian",
+    "isGlutenFree": false
+  },
+  {
+    "id": 2,
+    "name": "Veggie",
+    "isGlutenFree": true
+  },
+  {
+    "id": 3,
+    "name": "Pepperoni",
+    "isGlutenFree": false
+  }
+]
+
+2. Copy of working sales summary function:
+
+void GenerateSalesSummary(IEnumerable<string> salesFiles, string salesTotalDir, double salesTotal)
+{
+    var details = new StringBuilder();
+    
+    foreach (var file in salesFiles)
+    {
+        string salesJson = File.ReadAllText(file);
+        SalesData? data = JsonConvert.DeserializeObject<SalesData?>(salesJson);
+        double fileTotal = data?.Total ?? 0;
+        
+        details.AppendLine($"  {Path.GetFileName(file)}: {fileTotal:C}");
+    }
+
+    var report = new StringBuilder();
+    report.AppendLine("Sales Summary");
+    report.AppendLine("----------------------------");
+    report.AppendLine($" Total Sales: {salesTotal:C}");
+    report.AppendLine();
+    report.AppendLine(" Details:");
+    report.Append(details);
+
+    File.WriteAllText(Path.Combine(salesTotalDir, "summary.txt"), report.ToString());
+    Console.WriteLine(report.ToString());
+}

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json; 
+using System.Text;
 
 var currentDirectory = Directory.GetCurrentDirectory();
 var storesDirectory = Path.Combine(currentDirectory, "stores");
@@ -12,7 +13,7 @@ var salesTotal = CalculateSalesTotal(salesFiles);
 
 File.AppendAllText(Path.Combine(salesTotalDir, "totals.txt"), $"{salesTotal:F2}{Environment.NewLine}");
 
-File.AppendAllText(Path.Combine(salesTotalDir, "summary.txt"), $"Sales Summary\n------------\nTotal Sales: {salesTotal:F2}\nDetails:\n{string.Join("\n", salesFiles)}");
+GenerateSalesSummary(salesFiles, salesTotalDir, salesTotal);
 
 IEnumerable<string> FindFiles(string folderName)
 {
@@ -50,6 +51,31 @@ double CalculateSalesTotal(IEnumerable<string> salesFiles)
     }
     
     return salesTotal;
+}
+
+void GenerateSalesSummary(IEnumerable<string> salesFiles, string salesTotalDir, double salesTotal)
+{
+    var details = new StringBuilder();
+    
+    foreach (var file in salesFiles)
+    {
+        string salesJson = File.ReadAllText(file);
+        SalesData? data = JsonConvert.DeserializeObject<SalesData?>(salesJson);
+        double fileTotal = data?.Total ?? 0;
+        
+        details.AppendLine($"  {Path.GetFileName(file)}: {fileTotal:C}");
+    }
+
+    var report = new StringBuilder();
+    report.AppendLine("Sales Summary");
+    report.AppendLine("----------------------------");
+    report.AppendLine($" Total Sales: {salesTotal:C}");
+    report.AppendLine();
+    report.AppendLine(" Details:");
+    report.Append(details);
+
+    File.WriteAllText(Path.Combine(salesTotalDir, "summary.txt"), report.ToString());
+    Console.WriteLine(report.ToString());
 }
 
 record SalesData (double Total);
